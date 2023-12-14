@@ -5,7 +5,7 @@ from rest_framework.fields import ImageField
 
 
 class Sensor(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=200)
 
     def __str__(self):
@@ -13,7 +13,7 @@ class Sensor(models.Model):
     
     
 class Measurement(models.Model):
-    sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE)
+    sensor = models.ForeignKey(Sensor, related_name='measurements',on_delete=models.CASCADE)
     temperature = models.FloatField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
